@@ -19,8 +19,6 @@ extern char **environ;
 #define BUFFER_SIZE  1024
 /* String Manipulation functions */
 
-ssize_t My_Getline(char **_lineptr, size_t *size, int str);
-char *My_Strtok(char *_String, const char *_Delemiter);
 size_t _Strcspn(const char *_Str1, const char *_Str2);
 const char *_Strchr(const char *_Str, int _Char);
 char *_Strdup(char *Str);

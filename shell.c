@@ -22,7 +22,7 @@ int main(void)
 		{
 			write(1, "$ ", 2);
 		}
-		char_num = My_Getline(&store_str, &i, fileno(stdin));
+		char_num = getline(&store_str, &i, stdin);
 		if (char_num == -1)
 		{
 			break;
@@ -36,13 +36,13 @@ int main(void)
 				break;
 			}
 
-			token = My_Strtok(store_str, " ");
+			token = strtok(store_str, " ");
 			while (token != NULL)
 			{
 				argv = realloc(argv, (counter + 1) * sizeof(char *));
 				argv[counter] = token;
 				counter++;
-				token = My_Strtok(NULL, " ");
+				token = strtok(NULL, " ");
 			}
 
 			if (counter > 0)

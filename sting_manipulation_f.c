@@ -24,24 +24,6 @@ size_t _Strcspn(const char *_Str1, const char *_Str2)
 }
 
 /**
- * _Strchr - fucntion to find 1st occurence of specific char
- * @_Str: input string
- * @_Char: character to serach for in the input string
- * Return: pointer to matched character
- */
-char *_Strchr(const char *_Str, int _Char)
-{
-	while (*_Str != '\0')
-	{
-		if (*_Str == _Char)
-		{
-			return (_Str);
-		}
-		_Str++;
-	}
-	return (NULL);
-}
-/**
  * _Strdup - function to duplicate an input string
  * @Str: string to be duplicated
  * Return: pointer to duplicated string

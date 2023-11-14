@@ -1,25 +1,5 @@
 #include "shell.h"
 
-char *My_Strtok(char *_String, const char *_Delemiter);
-
-int main()
-{
-    char str[] = "Apples, Bananas, Oranges, Grapes";
-    const char delim[] = ", ";
-    char *token;
-
-    printf("Original string: %s\n", str);
-    printf("Tokens:\n");
-
-    token = My_Strtok(str, delim);
-    while (token != NULL)
-    {
-        printf("%s\n", token);
-        token = My_Strtok(NULL, delim);
-    }
-
-    return 0;
-}
 
 char *My_Strtok(char *_String, const char *_Delemiter)
 {

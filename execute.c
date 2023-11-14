@@ -39,7 +39,7 @@ int _execvp(const char *file, char *const argv[])
 	else
 	{
 		path = getenv("PATH");
-		path_copy = strdup(path);
+		path_copy = _Strdup(path);
 		dir = strtok(path_copy, ":");
 
 		while (dir != NULL)

@@ -29,9 +29,9 @@ int main(void)
 		}
 		else
 		{
-			store_str[strcspn(store_str, "\n")] = '\0';
+			store_str[_Strcspn(store_str, "\n")] = '\0';
 
-			if (strcmp(store_str, "exit") == 0)
+			if (_Strcmp(store_str, "exit") == 0)
 			{
 				break;
 			}

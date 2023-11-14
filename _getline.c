@@ -1,24 +1,5 @@
 #include "shell.h"
 
-ssize_t My_Getline(char **_lineptr, size_t *size, int str);
-
-int main(void)
-{
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-
-    printf("Enter some lines (Ctrl+D to end):\n");
-
-    while ((read = My_Getline(&line, &len, 0)) != -1)
-    {
-        printf("Read %zd characters: %s\n", read, line);
-    }
-
-    free(line);
-
-    return (0);
-}
 
 ssize_t My_Getline(char **_lineptr, size_t *size, int str)
 {

@@ -10,8 +10,8 @@
 #include <sys/stat.h>
 #define MAX_PATH_LENGTH 1024
 
+int main(void);
 int _execvp(const char *file, char *const argv[]);
-int main();
 
 /* Defining Global variable environ */
 

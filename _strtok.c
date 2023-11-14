@@ -24,7 +24,7 @@ int main()
 char *My_Strtok(char *_String, const char *_Delemiter)
 {
         static char *_BUFF;
-        int i, j, Copy, Match;
+        int j, Copy, Match;
        char *Start, *End, *Token;
 
        if (_String != NULL)

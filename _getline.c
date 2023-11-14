@@ -1,6 +1,5 @@
 #include "shell.h"
 
-#define BUFFER_SIZE 256
 ssize_t My_Getline(char **_lineptr, size_t *size, int str);
 
 int main(void)

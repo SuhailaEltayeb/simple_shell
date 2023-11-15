@@ -48,6 +48,15 @@ int _execvp(const char *file, char *const argv[])
 	else
 	{
 		waitpid(pid, &status, 0);
-		return (status); }
+		if (WIFEXITED(status))
+		{
+			return WEXITSTATUS(status);
+		}
+		else
+		{
+			fprintf(stderr, "Child process did not exit normally\n");
+			return (-1);
+		}
+	}
 	return (-1);
 }

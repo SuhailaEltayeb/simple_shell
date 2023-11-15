@@ -29,7 +29,8 @@ int main(void)
 			store_str[_Strcspn(store_str, "\n")] = '\0';
 			if (_Strcmp(store_str, "exit") == 0)
 			{
-				break;
+				free(store_str);
+				return (execute_status);
 		       	}
 			
 			comment = strchr(store_str, '#');

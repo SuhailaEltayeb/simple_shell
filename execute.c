@@ -1,50 +1,39 @@
 #include "shell.h"
-
-
-
-void execute_shell()
+/**
+ * execute_shell - function to execute the shell program
+ * Return: void
+ */
+void execute_shell(void)
 {
 	char *store_str = NULL;
-	size_t i = 0;
-	ssize_t char_num;
+	size_t char_num, i = 0;
 	int execute_status = -1;
-	char *token;
-	char **argv = NULL;
-	int counter = 0;
-	int j;
-	char *comment_pos;
+	char **comment_pos, token, **argv = NULL;
+	int j, counter = 0;
 
 	for (;;)
 	{
 		if (isatty(fileno(stdin)))
 		{
-			write(1, "$ ", 2);
-		}
-
+			write(1, "$ ", 2); }
 		char_num = getline(&store_str, &i, stdin);
 		if (char_num == -1)
 		{
-			break;
-		}
+			break; }
 		else
 		{
 			store_str[strcspn(store_str, "\n")] = '\0';
 
 			if (strcmp(store_str, "exit") == 0)
 			{
-				break;
-			}
+				break; }
 			comment_pos = strchr(store_str, '#');
 			if (comment_pos != NULL)
 			{
-				*comment_pos = '\0';
-			}
-
+				*comment_pos = '\0'; }
 			if (strlen(store_str) == 0)
 			{
-				continue;
-			}
-
+				continue; }
 			token = strtok(store_str, " ");
 			while (token != NULL)
 			{
@@ -53,43 +42,28 @@ void execute_shell()
 					char exit_status[4];
 					snprintf(exit_status, sizeof(exit_status), "%d", execute_status);
 					argv = realloc(argv, (counter + 1) * sizeof(char *));
-					argv[counter] = strdup(exit_status);
-				}
+					argv[counter] = strdup(exit_status); }
 				else if (strcmp(token, "$$") == 0)
 				{
 					char pid[10];
 					snprintf(pid, sizeof(pid), "%d", getpid());
 					argv = realloc(argv, (counter + 1) * sizeof(char *));
-					argv[counter] = strdup(pid);
-				}
+					argv[counter] = strdup(pid); }
 				else
 				{
 					argv = realloc(argv, (counter + 1) * sizeof(char *));
-					argv[counter] = strdup(token);
-				}
-
+					argv[counter] = strdup(token); }
 				counter++;
-				token = strtok(NULL, " ");
-			}
-
+				token = strtok(NULL, " "); }
 			if (counter > 0)
 			{
 				argv = realloc(argv, (counter + 1) * sizeof(char *));
 				argv[counter] = NULL;
-
 				execute_status = _execvp(argv[0], argv);
-
 				for (j = 0; j <= counter; j++)
 				{
-					free(argv[j]);
-				}
-
+					free(argv[j]); }
 				free(argv);
 				argv = NULL;
-				counter = 0;
-			}
-		}
-	}
-
-	free(store_str);
-}
+				counter = 0; } } }
+	free(store_str); }

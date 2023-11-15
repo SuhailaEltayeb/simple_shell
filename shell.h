@@ -13,16 +13,11 @@
 
 int main(void);
 int _execvp(const char *file, char *const argv[]);
+void execute_shell();
 
 /* Defining Global variable environ */
 
 extern char **environ;
-#define BUFFER_SIZE  1024
-/* String Manipulation functions */
 
-size_t _Strcspn(const char *_Str1, const char *_Str2);
-const char *_Strchr(const char *_Str, int _Char);
-char *_Strdup(char *Str);
-int _Strcmp(char *Str1, char *Str2);
 
 #endif

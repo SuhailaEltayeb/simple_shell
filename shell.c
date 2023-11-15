@@ -13,6 +13,7 @@ int main(void)
 	char *token, **argv = NULL;
 	int counter = 0;
 	char *comment;
+	char *newline = NULL;
 
 	for (;;)
 	{
@@ -26,32 +27,22 @@ int main(void)
 		}
 		else
 		{
-			store_str[_Strcspn(store_str, "\n")] = '\0';
-			if (_Strcmp(store_str, "exit") == 0)
-			{
-				free(store_str);
-				return (execute_status);
-		       	}
-			
 			comment = strchr(store_str, '#');
-            
-            if (comment != NULL)
-            {
-                *comment = '\0';
-            }
-            
-            if (strlen(store_str) == 0)
-            {
-                continue;
-            }
-
-			token = strtok(store_str, " ");
-			while (token != NULL)
+			if (comment != NULL)
 			{
-				argv = realloc(argv, (counter + 1) * sizeof(char *));
-				argv[counter] = token;
-				counter++;
-				token = strtok(NULL, " "); }
+				*comment = ('\0');
+			}
+			while ((newline = strchr(store_str, '\n')) != NULL)
+			{
+				*newline = ('\0');
+				token = strtok(store_str, " ");
+				while (token != NULL)
+				{
+					argv = realloc(argv, (counter + 1) * sizeof(char *));
+					argv[counter] = token;
+					counter++;
+					token = strtok(NULL, " ");
+				}
 			if (counter > 0)
 			{
 				argv = realloc(argv, (counter + 1) * sizeof(char *));
@@ -59,12 +50,11 @@ int main(void)
 				execute_status = _execvp(argv[0], argv);
 				free(argv);
 				argv = NULL;
-				counter = 0;
+				counter = (0);
+			}
 			}
 		}
 	}
-
-
 	free(store_str);
 	return (execute_status);
 }

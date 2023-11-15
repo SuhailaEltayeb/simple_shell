@@ -1,62 +1,95 @@
 #include "shell.h"
 
-/**
- * _execvp - Executes a file with the given arguments
- * @file: The path to the file to be executed
- * @argv: An array of arguments including the file to be executed
- *
- * Return: On success, returns the exit status of the executed file.
- *         On failure, returns -1.
- */
-int _execvp(const char *file, char *const argv[])
+
+
+void execute_shell()
 {
-	pid_t pid;
-	int status;
-	char command_path[MAX_PATH_LENGTH];
-	char *path;
-	char *path_copy;
-	char *dir;
+	char *store_str = NULL;
+	size_t i = 0;
+	ssize_t char_num;
+	int execute_status = -1;
+	char *token;
+	char **argv = NULL;
+	int counter = 0;
+	int j;
+	char *comment_pos;
 
-	pid = fork();
-	if (pid == -1)
+	for (;;)
 	{
-		perror("fork");
-		return (-1); }
-	else if (pid == 0)
-	{
-		if (_Strchr(file, '/') != NULL)
+		if (isatty(fileno(stdin)))
 		{
-			int execute_status = execv(file, argv);
+			write(1, "$ ", 2);
+		}
 
-			if (execute_status == -1)
-			{
-				perror("execv");
-				_exit(1); } }
-		else
+		char_num = getline(&store_str, &i, stdin);
+		if (char_num == -1)
 		{
-			path = getenv("PATH");
-			path_copy = _Strdup(path);
-			dir = strtok(path_copy, ":");
-			while (dir != NULL)
-			{
-				snprintf(command_path, sizeof(command_path), "%s/%s", dir, file);
-				execv(command_path, argv);
-				dir = strtok(NULL, ":"); }
-			fprintf(stderr, "%s: Command not found\n", file);
-			free(path_copy);
-			_exit(1); } }
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-		{
-			return WEXITSTATUS(status);
+			break;
 		}
 		else
 		{
-			fprintf(stderr, "Child process did not exit normally\n");
-			return (-1);
+			store_str[strcspn(store_str, "\n")] = '\0';
+
+			if (strcmp(store_str, "exit") == 0)
+			{
+				break;
+			}
+			comment_pos = strchr(store_str, '#');
+			if (comment_pos != NULL)
+			{
+				*comment_pos = '\0';
+			}
+
+			if (strlen(store_str) == 0)
+			{
+				continue;
+			}
+
+			token = strtok(store_str, " ");
+			while (token != NULL)
+			{
+				if (strcmp(token, "$?") == 0)
+				{
+					char exit_status[4];
+					snprintf(exit_status, sizeof(exit_status), "%d", execute_status);
+					argv = realloc(argv, (counter + 1) * sizeof(char *));
+					argv[counter] = strdup(exit_status);
+				}
+				else if (strcmp(token, "$$") == 0)
+				{
+					char pid[10];
+					snprintf(pid, sizeof(pid), "%d", getpid());
+					argv = realloc(argv, (counter + 1) * sizeof(char *));
+					argv[counter] = strdup(pid);
+				}
+				else
+				{
+					argv = realloc(argv, (counter + 1) * sizeof(char *));
+					argv[counter] = strdup(token);
+				}
+
+				counter++;
+				token = strtok(NULL, " ");
+			}
+
+			if (counter > 0)
+			{
+				argv = realloc(argv, (counter + 1) * sizeof(char *));
+				argv[counter] = NULL;
+
+				execute_status = _execvp(argv[0], argv);
+
+				for (j = 0; j <= counter; j++)
+				{
+					free(argv[j]);
+				}
+
+				free(argv);
+				argv = NULL;
+				counter = 0;
+			}
 		}
 	}
-	return (-1);
+
+	free(store_str);
 }

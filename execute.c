@@ -24,7 +24,7 @@ int _execvp(const char *file, char *const argv[])
 		return (-1); }
 	else if (pid == 0)
 	{
-		if (strchr(file, '/') != NULL)
+		if (_Strchr(file, '/') != NULL)
 		{
 			int execute_status = execv(file, argv);
 
@@ -49,4 +49,5 @@ int _execvp(const char *file, char *const argv[])
 	{
 		waitpid(pid, &status, 0);
 		return (status); }
-	return (-1); }
+	return (-1);
+}

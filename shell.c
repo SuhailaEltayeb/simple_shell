@@ -30,8 +30,7 @@ int main(void)
 			if (_Strcmp(store_str, "exit") == 0)
 			{
 				free(store_str);
-				break;
-				/*return (execute_status);*/
+				return (execute_status);
 			}
 			comment = strchr(store_str, '#');
 			if (comment != NULL)

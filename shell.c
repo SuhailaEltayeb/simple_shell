@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /**
  * main - Entry point of the program
  *
@@ -9,19 +8,16 @@
 int main(void)
 {
 	char *store_str = NULL;
-	size_t i = 0;
-	ssize_t char_num;
+	size_t char_num, i = 0;
 	int execute_status = -1;
-	char *token;
-	char **argv = NULL;
+	char *token, **argv = NULL;
 	int counter = 0;
 
 	for (;;)
 	{
 		if (isatty(fileno(stdin)))
 		{
-			write(1, "$ ", 2);
-		}
+			write(1, "$ ", 2); }
 		char_num = getline(&store_str, &i, stdin);
 		if (char_num == -1)
 		{
@@ -32,8 +28,7 @@ int main(void)
 			store_str[_Strcspn(store_str, "\n")] = '\0';
 			if (_Strcmp(store_str, "exit") == 0)
 			{
-				break;
-			}
+				break; }
 
 			token = strtok(store_str, " ");
 			while (token != NULL)
@@ -41,22 +36,22 @@ int main(void)
 				argv = realloc(argv, (counter + 1) * sizeof(char *));
 				argv[counter] = token;
 				counter++;
-				token = strtok(NULL, " ");
-			}
-
+				token = strtok(NULL, " "); }
 			if (counter > 0)
 			{
 				argv = realloc(argv, (counter + 1) * sizeof(char *));
 				argv[counter] = NULL;
-
 				execute_status = _execvp(argv[0], argv);
+<<<<<<< HEAD
 				free(argv);
 				argv = NULL;
 				counter = 0;
 			}
 		}
 	}
+=======
+				free(argv); } } }
+>>>>>>> 9ffb3ed09688c1cc617a465940653474674fc5d5
 
 	free(store_str);
-	return (execute_status);
-}
+	return (execute_status); }

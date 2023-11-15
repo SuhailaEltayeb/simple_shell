@@ -14,6 +14,8 @@
 int main(void);
 int _execvp(const char *file, char *const argv[]);
 void execute_shell();
+void execute_command(const char *command);
+void tokenize_arguments(char *command, char ***argv, int *argc);
 
 /* Defining Global variable environ */
 

@@ -30,7 +30,6 @@ int main(void)
 		else
 		{
 			store_str[_Strcspn(store_str, "\n")] = '\0';
-
 			if (_Strcmp(store_str, "exit") == 0)
 			{
 				break;
@@ -52,6 +51,8 @@ int main(void)
 
 				execute_status = _execvp(argv[0], argv);
 				free(argv);
+				argv = NULL;
+				counter = 0;
 			}
 		}
 	}

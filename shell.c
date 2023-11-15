@@ -42,16 +42,14 @@ int main(void)
 				argv = realloc(argv, (counter + 1) * sizeof(char *));
 				argv[counter] = NULL;
 				execute_status = _execvp(argv[0], argv);
-<<<<<<< HEAD
 				free(argv);
 				argv = NULL;
 				counter = 0;
 			}
 		}
 	}
-=======
-				free(argv); } } }
->>>>>>> 9ffb3ed09688c1cc617a465940653474674fc5d5
+
 
 	free(store_str);
-	return (execute_status); }
+	return (execute_status);
+}

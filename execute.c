@@ -3,7 +3,7 @@
  * execute_shell - function to execute the shell program
  * Return: void
  */
-void execute_shell(void)
+void execute_shell()
 {
 	char *store_str = NULL;
 	size_t char_num, i = 0;

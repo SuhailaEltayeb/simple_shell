@@ -13,7 +13,7 @@
 
 int main(void);
 int _execvp(const char *file, char *const argv[]);
-void execute_shell(void);
+void execute_shell();
 
 /* Defining Global variable environ */
 
